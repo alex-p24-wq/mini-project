@@ -1,21 +1,36 @@
 {
-  "name": "mini-project",
+  "name": "e-cardamom-connect",
   "version": "1.0.0",
-  "description": "",
+  "description": "E-Cardamom Connect - Full-stack platform for cardamom trading and hub management",
   "main": "index.js",
   "scripts": {
-    
+    "install-all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run preview",
+    "build": "cd frontend && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alex-p24-wq/E-Cardamom_connect.git"
   },
-  "keywords": [],
+  "keywords": [
+    "cardamom",
+    "agriculture",
+    "trading",
+    "hub-management",
+    "e-commerce"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alex-p24-wq/E-Cardamom_connect/issues"
   },
-  "homepage": "https://github.com/alex-p24-wq/E-Cardamom_connect#readme"
+  "homepage": "https://github.com/alex-p24-wq/E-Cardamom_connect#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }
