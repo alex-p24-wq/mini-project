@@ -1,0 +1,87 @@
+/* Modern Theme and Motion Utilities */
+:root {
+  /* Greenery palette */
+  --g-50: #f1f8e9;
+  --g-100: #dcedc8;
+  --g-200: #c5e1a5;
+  --g-300: #aed581;
+  --g-400: #9ccc65;
+  --g-500: #8bc34a;
+  --g-600: #7cb342;
+  --g-700: #689f38;
+  --g-800: #558b2f;
+  --g-900: #33691e;
+
+  --brand-primary: #2e7d32;
+  --brand-primary-2: #43a047;
+  --brand-accent: #66bb6a;
+  --brand-soft: #e8f5e9;
+
+  /* Light complementary palettes for other dashboards */
+  --indigo-start: #667eea;
+  --indigo-end: #764ba2;
+  --teal-start: #00897b;
+  --teal-end: #26a69a;
+  --violet-start: #6a11cb;
+  --blue-end: #2575fc;
+
+  --card-radius: 16px;
+  --card-shadow-1: 0 6px 18px rgba(0,0,0,0.08);
+  --card-shadow-2: 0 12px 28px rgba(0,0,0,0.12);
+  --elevate-transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+/* Animated gradient helper */
+.bg-animated-gradient {
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-2) 50%, var(--brand-accent) 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Decorative blob background container */
+.blob-bg {
+  position: relative;
+  isolation: isolate;
+}
+.blob-bg::before,
+.blob-bg::after {
+  content: "";
+  position: absolute;
+  inset: auto auto auto auto;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(closest-side, rgba(76,175,80,.16), transparent 70%);
+  filter: blur(3px);
+  border-radius: 50%;
+  z-index: -1;
+  animation: floatY 10s ease-in-out infinite;
+}
+.blob-bg::before { top: -60px; left: -60px; animation-delay: 0s; }
+.blob-bg::after { bottom: -60px; right: -60px; animation-delay: 2.2s; }
+
+/* Card elevation + hover lift */
+.card-animated { box-shadow: var(--card-shadow-1); transition: var(--elevate-transition); border-radius: var(--card-radius); }
+.card-animated:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-2); }
+
+/* Subtle button pulse on hover */
+.btn-pulse { position: relative; overflow: hidden; }
+.btn-pulse::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,.25), transparent 40%); opacity: 0; transition: opacity .25s ease; }
+.btn-pulse:hover::after { opacity: 1; }
+
+/* Fade and slide-in animations for rows/cards */
+.fade-slide-up { opacity: 0; transform: translateY(8px); animation: fadeSlideUp .45s ease forwards; }
+.fade-slide-up.delay-1 { animation-delay: .06s; }
+.fade-slide-up.delay-2 { animation-delay: .12s; }
+.fade-slide-up.delay-3 { animation-delay: .18s; }
+
+/* Keyframes */
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .bg-animated-gradient { animation: none; }
+  .blob-bg::before, .blob-bg::after { animation: none; }
+  .fade-slide-up { animation: none; opacity: 1; transform: none; }
+}

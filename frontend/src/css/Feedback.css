@@ -1,0 +1,105 @@
+/* Modern gradient UI for feedback pages */
+@import './theme-modern.css';
+
+.feedback-card {
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow-1);
+}
+
+.feedback-header {
+  padding: 16px 18px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--indigo-start), var(--indigo-end));
+  background-size: 200% 200%;
+  animation: gradientShift 14s ease infinite;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.feedback-header h3 {
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.feedback-content {
+  background: linear-gradient(180deg, #ffffff, #ffffff 60%, var(--brand-soft) 100%);
+}
+
+/* Form styling */
+.feedback-card .form-field label {
+  font-weight: 600;
+  color: #1f2937;
+}
+.feedback-card .form-field input,
+.feedback-card .form-field select,
+.feedback-card .form-field textarea {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  outline: none;
+  transition: box-shadow .2s ease, border-color .2s ease, transform .06s ease;
+  background: #fff;
+}
+.feedback-card .form-field input:focus,
+.feedback-card .form-field select:focus,
+.feedback-card .form-field textarea:focus {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px rgba(102,187,106,0.25);
+}
+
+/* Buttons */
+.feedback-card .form-actions .view-all-btn,
+.feedback-card .form-actions .btn-primary {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .2s ease;
+}
+.feedback-card .form-actions .view-all-btn:hover,
+.feedback-card .form-actions .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(46,125,50,0.24);
+}
+.feedback-card .form-actions .view-all-btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* Filters panel (admin feedback) */
+.feedback-filters {
+  background: linear-gradient(135deg, rgba(102,187,106,.12), rgba(76,175,80,.08));
+  border: 1px solid rgba(76,175,80,.18);
+  padding: 10px;
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+}
+.feedback-filters input,
+.feedback-filters select {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 8px 10px;
+}
+
+/* Tables */
+.feedback-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.feedback-table thead th {
+  background: #f9fafb;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.feedback-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.feedback-table tbody tr:hover {
+  background: #f8fff9;
+}
