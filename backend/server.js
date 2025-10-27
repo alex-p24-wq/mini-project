@@ -60,6 +60,27 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/hubs", hubRoutes);
 app.use("/api/order-requests", orderRequestRoutes);
 
+// Root endpoint - API info
+app.get('/', (req, res) => {
+  res.json({
+    name: 'E-Cardamom Connect API',
+    version: '1.0.0',
+    status: 'running',
+    message: 'Welcome to E-Cardamom Connect Backend API',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth/*',
+      farmer: '/api/farmer/*',
+      customer: '/api/customer/*',
+      admin: '/api/admin/*',
+      hubs: '/api/hubs/*',
+      feedback: '/api/feedback/*'
+    },
+    documentation: 'https://github.com/alex-p24-wq/E-Cardamom_connect',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
