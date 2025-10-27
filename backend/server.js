@@ -83,34 +83,19 @@ app.use('*', (req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-// Database connection and server startup
-const startServer = async () => {
+// Database connection initialization
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) {
+    console.log('Using existing database connection');
+    return;
+  }
+
   try {
-    // Connect to MongoDB
     await mongoose.connect(process.env.MONGO_URI);
+    isConnected = true;
     console.log('✅ Connected to MongoDB');
-    
-    // Start server with automatic port fallback if port is busy
-    const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 5000;
-
-    const startListening = (port, attempt = 0) => {
-      const server = app.listen(port, () => {
-        console.log(`🚀 Server running on port ${port}`);
-        console.log(`📧 Environment: ${process.env.NODE_ENV || 'development'}`);
-        console.log(`🖼️ Serving uploads at /uploads`);
-      });
-
-      server.on('error', (err) => {
-        if (err.code === 'EADDRINUSE' && attempt < 5) {
-          const nextPort = port + 1;
-          console.warn(`⚠️ Port ${port} in use. Trying ${nextPort}...`);
-          startListening(nextPort, attempt + 1);
-        } else {
-          console.error('❌ Failed to start server:', err);
-          process.exit(1);
-        }
-      });
-    };
 
     // Ensure indexes for Feedback and OrderRequest are created
     try {
@@ -134,6 +119,40 @@ const startServer = async () => {
     } catch (e) {
       console.warn('⚠️ Email service verification failed:', e?.message || e);
     }
+  } catch (error) {
+    console.error('❌ Failed to connect to database:', error);
+    throw error;
+  }
+};
+
+// Initialize database connection for serverless
+connectDB().catch(err => console.error('DB connection error:', err));
+
+// Traditional server startup (for local development or traditional hosting)
+const startServer = async () => {
+  try {
+    await connectDB();
+    
+    const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 5000;
+
+    const startListening = (port, attempt = 0) => {
+      const server = app.listen(port, () => {
+        console.log(`🚀 Server running on port ${port}`);
+        console.log(`📧 Environment: ${process.env.NODE_ENV || 'development'}`);
+        console.log(`🖼️ Serving uploads at /uploads`);
+      });
+
+      server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE' && attempt < 5) {
+          const nextPort = port + 1;
+          console.warn(`⚠️ Port ${port} in use. Trying ${nextPort}...`);
+          startListening(nextPort, attempt + 1);
+        } else {
+          console.error('❌ Failed to start server:', err);
+          process.exit(1);
+        }
+      });
+    };
 
     startListening(DEFAULT_PORT);
   } catch (error) {
@@ -142,4 +161,10 @@ const startServer = async () => {
   }
 };
 
-startServer();
+// Only start the server if not running in Vercel serverless environment
+if (process.env.VERCEL !== '1') {
+  startServer();
+}
+
+// Export for Vercel serverless
+export default app;
