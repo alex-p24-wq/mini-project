@@ -11,6 +11,9 @@
     "start:backend": "cd backend && npm start",
     "start:frontend": "cd frontend && npm run preview",
     "build": "cd frontend && npm install && npm run build",
+    "build:backend": "cd backend && npm install",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "deploy:check": "echo 'Backend: Vercel | Frontend: Render'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
