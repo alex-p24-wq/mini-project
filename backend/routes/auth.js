@@ -505,8 +505,6 @@ router.post('/google', [
   }
 });
 
-export default router;
-
 // Mailer diagnostics (do not expose in production)
 router.get('/mailer-status', (req, res) => {
   try {
