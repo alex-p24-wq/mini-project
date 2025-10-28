@@ -15,10 +15,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? [
+      process.env.FRONTEND_URL || 'https://your-app.vercel.app',
+      'http://localhost:5173', // Allow local development
+      'http://localhost:3000'
+    ]
+  : ['http://localhost:3000', 'http://localhost:5173'];
+
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://your-app.vercel.app'] 
-    : ['http://localhost:3000', 'http://localhost:5173'],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️ CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-App-Check']
