@@ -18,6 +18,7 @@ const __dirname = path.dirname(__filename);
 const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [
       process.env.FRONTEND_URL || 'https://your-app.vercel.app',
+      'https://mini-project-wgly.onrender.com', // Render frontend
       'http://localhost:5173', // Allow local development
       'http://localhost:5174', // Alternative local port
       'http://localhost:5175', // Alternative local port
@@ -25,7 +26,15 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
       'http://localhost:5177', // Alternative local port
       'http://localhost:3000'
     ]
-  : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5177'];
+  : [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'http://localhost:5175',
+      'http://localhost:5176',
+      'http://localhost:5177',
+      'https://mini-project-wgly.onrender.com' // Allow Render in development too
+    ];
 
 const corsOptions = {
   origin: (origin, callback) => {
