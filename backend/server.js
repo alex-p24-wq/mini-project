@@ -19,9 +19,10 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [
       process.env.FRONTEND_URL || 'https://your-app.vercel.app',
       'http://localhost:5173', // Allow local development
+      'http://localhost:5174', // Alternative local port
       'http://localhost:3000'
     ]
-  : ['http://localhost:3000', 'http://localhost:5173'];
+  : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174'];
 
 const corsOptions = {
   origin: (origin, callback) => {
